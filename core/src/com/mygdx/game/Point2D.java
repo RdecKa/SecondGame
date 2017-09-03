@@ -18,4 +18,9 @@ public class Point2D {
         this.positionX += vector.getComponentX();
         this.positionY += vector.getComponentY();
     }
+
+    @Override
+    public String toString() {
+        return "(" + positionX + ", " + positionY + ")";
+    }
 }

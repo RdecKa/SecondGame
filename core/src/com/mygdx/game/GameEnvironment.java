@@ -16,6 +16,8 @@ public class GameEnvironment {
     public static int fragmentShaderID;
     public static int positionLoc;
     public static int colorLoc;
+    public static float winWidth;
+    public static float winHeight;
 
     public static void init() {
         String vertexShaderString;
@@ -75,6 +77,9 @@ public class GameEnvironment {
         modelMatrix.rewind();
 
         Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
+
+        winWidth = Gdx.graphics.getWidth();
+        winHeight = Gdx.graphics.getHeight();
     }
 
     public static void clearModelMatrix() {

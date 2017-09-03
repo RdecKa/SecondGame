@@ -11,6 +11,12 @@ public class Vector2D {
 
     public float getComponentX() { return this.componentX; }
     public float getComponentY() { return this.componentY; }
+
     public void setComponentX(float componentX) { this.componentX = componentX; }
     public void setComponentY(float componentY) { this.componentY = componentY; }
+
+	public void changeComponents(float componentX, float componentY) {
+    	this.componentX += componentX;
+    	this.componentY += componentY;
+    }
 }
