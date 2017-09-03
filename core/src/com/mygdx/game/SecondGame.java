@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class SecondGame extends ApplicationAdapter {
 	private Cannon cannon;
+	private CannonBall ball;
 
 	@Override
 	public void create() {
@@ -25,7 +26,7 @@ public class SecondGame extends ApplicationAdapter {
 
 		}
 
-		// Moving cannon
+		// Moving the cannon
 
 		float changeX, changeY;
 
@@ -53,12 +54,23 @@ public class SecondGame extends ApplicationAdapter {
 		cannon.move();
 
 
-		// Rotating cannon
+		// Rotating the cannon
 
 		if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
 			cannon.rotate(new Angle2D(150 * deltaTime));
 		} else if (!Gdx.input.isKeyPressed(Input.Keys.S) && Gdx.input.isKeyPressed(Input.Keys.D)) {
 			cannon.rotate(new Angle2D(-150 * deltaTime));
+		}
+
+		// Firing the cannon
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			ball = cannon.fire();
+		}
+
+		// Moving the cannon ball
+		if (ball != null) {
+			ball.move();
 		}
 	}
 

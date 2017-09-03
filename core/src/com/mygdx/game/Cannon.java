@@ -15,6 +15,7 @@ public class Cannon {
     private float length;
     private float width;
     private float circleRadius;
+    private CannonBall ball;
 
 	private static FloatBuffer vertexBuffer;
 	private static int vertexPointer;
@@ -27,6 +28,7 @@ public class Cannon {
         this.length = 50;
         this.width = 20;
         this.circleRadius = 10;
+        this.ball = null;
 
 		Cannon.vertexPointer = vertexPointer;
 
@@ -42,6 +44,11 @@ public class Cannon {
     }
 
     public void draw() {
+		// CannonBall
+		if (ball != null) {
+			ball.draw();
+		}
+
 		GameEnvironment.setModelMatrixTranslation(position.getPositionX(), position.getPositionY());
 
 		// Circle - outer, black
@@ -165,7 +172,37 @@ public class Cannon {
 		vertexBuffer.rewind();
 	}
 
+	public CannonBall fire() {
+		if (this.ball == null) {
+			this.ball = new CannonBall(10, position.clone(), angle);
+		}
+		return this.ball;
+	}
+
 	public Vector2D getAcceleration() {
 		return acceleration;
+	}
+}
+
+class CannonBall {
+	private float ballRadius;
+	private Point2D position;
+	private Vector2D motion;
+
+	public CannonBall(float ballRadius, Point2D position, Angle2D angle) {
+		this.ballRadius = ballRadius;
+		this.position = position;
+		this.motion = angle.toVector(10);
+	}
+
+	public void draw() {
+		GameEnvironment.setModelMatrixTranslation(position.getPositionX(), position.getPositionY());
+		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0.2f, 0.6f, 0.9f, 1);
+		GameEnvironment.setModelMatrixScale(ballRadius, ballRadius);
+		CircleGraphics.drawSolidCircle();
+	}
+
+	public void move() {
+		position.move(motion);
 	}
 }

@@ -38,6 +38,10 @@ public class Point2D {
 		return new Vector2D(this.getPositionX(), this.getPositionY());
 	}
 
+	public Point2D clone() {
+    	return new Point2D(positionX, positionY);
+	}
+
     @Override
     public String toString() {
         return "(" + positionX + ", " + positionY + ")";

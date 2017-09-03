@@ -22,4 +22,10 @@ public class Angle2D {
 	public Angle2D getPerpAngle(float degrees) {
 		return new Angle2D(this.angleDegrees + degrees);
 	}
+
+	public Vector2D toVector(float velocity) {
+		float componentX = (float)(velocity * Math.cos(Math.toRadians(this.angleDegrees)));
+		float componentY = (float)(velocity * Math.sin(Math.toRadians(this.angleDegrees)));
+		return new Vector2D(componentX, componentY);
+	}
 }
