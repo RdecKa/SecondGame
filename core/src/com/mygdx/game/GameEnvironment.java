@@ -18,6 +18,7 @@ public class GameEnvironment {
     public static int colorLoc;
     public static float winWidth;
     public static float winHeight;
+    public static String state;
 
     public static void init() {
         String vertexShaderString;
@@ -80,6 +81,8 @@ public class GameEnvironment {
 
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
+
+        state = "start";
     }
 
     public static void clearModelMatrix() {

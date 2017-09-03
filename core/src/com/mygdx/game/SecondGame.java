@@ -22,61 +22,72 @@ public class SecondGame extends ApplicationAdapter {
 	private void update() {
 		float deltaTime = Gdx.graphics.getDeltaTime();
 
-		if(Gdx.input.justTouched()) {
+		if (GameEnvironment.state.equals("start") ||
+				GameEnvironment.state.equals("ballfired")) {
+			if (Gdx.input.justTouched()) {
 
-		}
+			}
 
-		// Moving the cannon
+			// Moving the cannon
 
-		float changeX, changeY;
+			float changeX, changeY;
 
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			changeX = Integer.MAX_VALUE;
-		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			changeX = - cannon.getAcceleration().getComponentX();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			changeX = cannon.getAcceleration().getComponentY();
-		} else {
-			changeX = Integer.MAX_VALUE;
-		}
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				changeX = Integer.MAX_VALUE;
+			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				changeX = -cannon.getAcceleration().getComponentX();
+			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				changeX = cannon.getAcceleration().getComponentY();
+			} else {
+				changeX = Integer.MAX_VALUE;
+			}
 
-		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			changeY = Integer.MAX_VALUE;
-		} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			changeY = cannon.getAcceleration().getComponentY();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			changeY = - cannon.getAcceleration().getComponentY();
-		} else {
-			changeY = Integer.MAX_VALUE;
-		}
+			if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				changeY = Integer.MAX_VALUE;
+			} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				changeY = cannon.getAcceleration().getComponentY();
+			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				changeY = -cannon.getAcceleration().getComponentY();
+			} else {
+				changeY = Integer.MAX_VALUE;
+			}
 
-		cannon.changeSpeed(changeX, changeY, deltaTime);
-		cannon.move();
+			cannon.changeSpeed(changeX, changeY, deltaTime);
+			cannon.move();
 
 
-		// Rotating the cannon
+			// Rotating the cannon
 
-		if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			cannon.rotate(new Angle2D(150 * deltaTime));
-		} else if (!Gdx.input.isKeyPressed(Input.Keys.S) && Gdx.input.isKeyPressed(Input.Keys.D)) {
-			cannon.rotate(new Angle2D(-150 * deltaTime));
-		}
+			if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+				cannon.rotate(new Angle2D(150 * deltaTime));
+			} else if (!Gdx.input.isKeyPressed(Input.Keys.S) && Gdx.input.isKeyPressed(Input.Keys.D)) {
+				cannon.rotate(new Angle2D(-150 * deltaTime));
+			}
 
-		// Firing the cannon
+			// Firing the cannon
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-			ball = cannon.fire();
-		}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+				ball = cannon.fire();
+			}
 
-		// Moving the cannon ball
-		if (ball != null) {
-			ball.move();
+			// Moving the cannon ball
+			if (ball != null) {
+				ball.move();
+			}
+		} else if (GameEnvironment.state.equals("gameover")) {
+
 		}
 	}
 
 	private void display() {
+		if (GameEnvironment.state.equals("start") ||
+				GameEnvironment.state.equals("ballfired")) {
+			Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		} else {
+			Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 0.8f);
+		}
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		cannon.draw();
 	}

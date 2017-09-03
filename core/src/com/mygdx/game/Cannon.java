@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.BufferUtils;
@@ -175,6 +176,7 @@ public class Cannon {
 	public CannonBall fire() {
 		if (this.ball == null) {
 			this.ball = new CannonBall(10, position.clone(), angle);
+			GameEnvironment.state = "ballfired";
 		}
 		return this.ball;
 	}
@@ -204,5 +206,11 @@ class CannonBall {
 
 	public void move() {
 		position.move(motion);
+		if (position.getPositionX() < - 2 * ballRadius ||
+				position.getPositionX() > GameEnvironment.winWidth + 2 * ballRadius ||
+				position.getPositionY() < - 2 * ballRadius ||
+				position.getPositionY() > GameEnvironment.winHeight + 2 * ballRadius) {
+			GameEnvironment.state = "gameover";
+		}
 	}
 }
