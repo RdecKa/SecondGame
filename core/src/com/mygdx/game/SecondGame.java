@@ -27,6 +27,11 @@ public class SecondGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+		GameEnvironment.clearModelMatrix();
+		Cannon cannon = new Cannon(new Point2D(200, 200), GameEnvironment.positionLoc);
+		cannon.draw();
+
+		/*
 		// Boxes
 		GameEnvironment.setModelMatrixTranslation(100f, 100f);
 		GameEnvironment.setModelMatrixScale(100, 100);
@@ -46,6 +51,7 @@ public class SecondGame extends ApplicationAdapter {
 
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0.8f, 0.8f, 0.7f, 1);
 		CircleGraphics.drawOutlineCircle();
+		*/
 	}
 
 	@Override
