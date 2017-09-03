@@ -22,10 +22,10 @@ public class Cannon {
     public Cannon(Point2D position, int vertexPointer) {
         this.position = position;
         this.speed = new Vector2D(0, 0);
-        this.acceleration = new Vector2D(50, 50);
+        this.acceleration = new Vector2D(20, 20);
         this.angle = new Angle2D(0);
         this.length = 50;
-        this.width = 10;
+        this.width = 20;
         this.circleRadius = 10;
 
 		Cannon.vertexPointer = vertexPointer;
@@ -49,15 +49,15 @@ public class Cannon {
 		GameEnvironment.setModelMatrixScale(2 * circleRadius, 2 * circleRadius);
 		CircleGraphics.drawSolidCircle();
 		// Circle - inner, white
-		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 1, 1, 1, 1);
+		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0.5f, 1, 1, 1);
 		GameEnvironment.setModelMatrixScale(1.5f * circleRadius, 1.5f * circleRadius);
 		CircleGraphics.drawSolidCircle();
 
 		// Body - white
-		GameEnvironment.setModelMatrixScale(1.9f,1.9f);
-		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 1, 1, 1, 1);
+		/*GameEnvironment.setModelMatrixScale(1.9f,1.9f);
+		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 1, 0.5f, 1, 1);
 		Gdx.gl.glVertexAttribPointer(vertexPointer, 2, GL20.GL_FLOAT, false, 0, vertexBuffer);
-		Gdx.gl.glDrawArrays(GL20.GL_TRIANGLE_FAN, 0, 4);
+		Gdx.gl.glDrawArrays(GL20.GL_TRIANGLE_FAN, 0, 4);*/
 		// Body - black
 		GameEnvironment.setModelMatrixScale(1,1);
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0, 0, 1);
@@ -65,7 +65,7 @@ public class Cannon {
 		Gdx.gl.glDrawArrays(GL20.GL_TRIANGLE_FAN, 0, 4);
 	}
 
-    public void move(float deltaTime) {
+    public void move() {
 		if (position.getPositionX() + speed.getComponentX() < 2 * circleRadius) {
 			// Check left border
 			speed.setComponentX(0);
@@ -130,6 +130,39 @@ public class Cannon {
 			}
 		}
 		speed.changeComponents(deltaX * deltaTime, deltaY * deltaTime);
+	}
+
+	public void rotate(Angle2D angle) {
+		this.angle.add(angle);
+
+		// Angle from center to distant corners
+		double tanAngleDelta = (width / 2) / length;
+		Angle2D angleDelta = new Angle2D((float)(Math.toDegrees(Math.atan(tanAngleDelta))));
+
+		Angle2D angBotLef = this.angle.getPerpAngle(90);
+		Angle2D angBotRig = this.angle.getPerpAngle(-90);
+		Angle2D angTopLef = new Angle2D(this.angle.getAngleDegrees() + angleDelta.getAngleDegrees());
+		Angle2D angTopRig = new Angle2D(this.angle.getAngleDegrees() - angleDelta.getAngleDegrees());
+
+		float distance = (float)(Math.sqrt((width / 2) * (width / 2) + length * length));
+
+		Point2D botLef = new Point2D((float)(Math.cos(angBotLef.getAngleRadians()) * width / 2),
+									 (float)(Math.sin(angBotLef.getAngleRadians()) * width / 2));
+		Point2D botRig = new Point2D((float)(Math.cos(angBotRig.getAngleRadians()) * width / 2),
+									 (float)(Math.sin(angBotRig.getAngleRadians()) * width / 2));
+		Point2D topLef = new Point2D((float)(Math.cos(angTopLef.getAngleRadians()) * distance),
+									 (float)(Math.sin(angTopLef.getAngleRadians()) * distance));
+		Point2D topRig = new Point2D((float)(Math.cos(angTopRig.getAngleRadians()) * distance),
+									 (float)(Math.sin(angTopRig.getAngleRadians()) * distance));
+
+		float[] array = {
+				botLef.getPositionX(), botLef.getPositionY(),
+				topLef.getPositionX(), topLef.getPositionY(),
+				topRig.getPositionX(), topRig.getPositionY(),
+				botRig.getPositionX(), botRig.getPositionY()};
+
+		vertexBuffer.put(array);
+		vertexBuffer.rewind();
 	}
 
 	public Vector2D getAcceleration() {
