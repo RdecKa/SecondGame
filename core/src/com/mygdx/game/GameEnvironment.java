@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.BufferUtils;
 import java.nio.FloatBuffer;
+import java.util.Vector;
 
 public class GameEnvironment {
 
@@ -16,9 +17,10 @@ public class GameEnvironment {
     public static int fragmentShaderID;
     public static int positionLoc;
     public static int colorLoc;
-    public static float winWidth;
-    public static float winHeight;
+    public static float winWidth, winHeight;
     public static String state;
+    public static int numLevels, curLevelIndex;
+    public static Level[] levels;
 
     public static void init() {
         String vertexShaderString;
@@ -83,6 +85,12 @@ public class GameEnvironment {
         winHeight = Gdx.graphics.getHeight();
 
         state = "start";
+        numLevels = 2;
+        curLevelIndex = 0;
+        levels = new Level[numLevels];
+        for (int i = 0; i < numLevels; i++) {
+        	levels[i] = new Level(i + 1);
+		}
     }
 
     public static void clearModelMatrix() {
@@ -116,4 +124,34 @@ public class GameEnvironment {
         modelMatrix.put(5, yScale);
         Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
     }
+}
+
+class Level {
+
+	private int levelNum;
+	private Vector<Box> boxes;
+
+	public Level(int levelNum) {
+		this.levelNum = levelNum;
+		this.boxes = new Vector<Box>();
+		switch (levelNum) {
+			case 1: {
+				float boxSize = 50;
+				boxes.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 300)));
+				break;
+			}
+			case 2: {
+				float boxSize = 50;
+				boxes.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
+				boxes.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 400)));
+				break;
+			}
+		}
+	}
+
+	public void draw() {
+		for (Box box: boxes) {
+			box.draw();
+		}
+	}
 }

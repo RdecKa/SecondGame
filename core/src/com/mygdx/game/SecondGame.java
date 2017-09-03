@@ -75,7 +75,11 @@ public class SecondGame extends ApplicationAdapter {
 				ball.move();
 			}
 		} else if (GameEnvironment.state.equals("gameover")) {
-
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+				GameEnvironment.state = "start";
+				cannon.reset();
+				ball = null;
+			}
 		}
 	}
 
@@ -83,13 +87,19 @@ public class SecondGame extends ApplicationAdapter {
 		if (GameEnvironment.state.equals("start") ||
 				GameEnvironment.state.equals("ballfired")) {
 			Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			GameEnvironment.levels[GameEnvironment.curLevelIndex].draw();
+
+			cannon.draw();
 		} else {
 			Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 0.8f);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
 
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		cannon.draw();
+
+
 	}
 
 	@Override

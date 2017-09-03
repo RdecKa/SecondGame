@@ -181,6 +181,10 @@ public class Cannon {
 		return this.ball;
 	}
 
+	public void reset() {
+    	ball = null;
+	}
+
 	public Vector2D getAcceleration() {
 		return acceleration;
 	}
