@@ -183,6 +183,7 @@ public class Cannon {
 
 	public void reset() {
     	ball = null;
+    	speed = new Vector2D(0, 0);
 	}
 
 	public Vector2D getAcceleration() {
