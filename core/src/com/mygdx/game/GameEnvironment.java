@@ -84,9 +84,8 @@ public class GameEnvironment {
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
 
-        state = "start";
         numLevels = 4;
-        curLevelIndex = 0;
+
         levels = new Level[numLevels];
         for (int i = 0; i < numLevels; i++) {
         	levels[i] = new Level(i + 1);
@@ -96,6 +95,11 @@ public class GameEnvironment {
 		CircleGraphics.create(positionLoc);
 		LineGraphics.create(positionLoc);
     }
+
+    public static void resetGame() {
+		state = "start";
+		curLevelIndex = 0;
+	}
 
     public static void clearModelMatrix() {
         modelMatrix.put(0, 1.0f);

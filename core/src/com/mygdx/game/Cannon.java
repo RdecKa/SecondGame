@@ -22,8 +22,8 @@ public class Cannon {
 	private static int vertexPointer;
 
     public Cannon(Point2D position, int vertexPointer) {
-        this.position = position;
-        this.speed = new Vector2D(0, 0);
+		this.position = position;
+		this.speed = new Vector2D(0, 0);
         this.acceleration = new Vector2D(20, 20);
         this.angle = new Angle2D(0);
         this.length = 50;
@@ -42,9 +42,10 @@ public class Cannon {
 		vertexBuffer = BufferUtils.newFloatBuffer(8);
 		vertexBuffer.put(array);
 		vertexBuffer.rewind();
-    }
+	}
 
     public void draw() {
+
 		// CannonBall
 		if (ball != null) {
 			ball.draw();
@@ -181,12 +182,18 @@ public class Cannon {
 		return this.ball;
 	}
 
+	public void moveBall() {
+    	this.ball.move();
+	}
+
 	public void reset() {
     	ball = null;
     	speed = new Vector2D(0, 0);
 	}
 
 	public Vector2D getAcceleration() { return acceleration; }
+
+	public CannonBall getBall() { return ball; }
 }
 
 class CannonBall {

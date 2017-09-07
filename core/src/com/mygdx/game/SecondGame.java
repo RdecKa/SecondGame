@@ -7,21 +7,33 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class SecondGame extends ApplicationAdapter {
 	private Cannon cannon;
-	private CannonBall ball;
 	private float mouseX, mouseY;
 	private Point2D startLine, endLine;
+	private Point2D cannonStartPosition;
+	private Angle2D cannonStartAngle;
 
 	@Override
 	public void create() {
 		GameEnvironment.init();
+		GameEnvironment.resetGame();
 
-		cannon = new Cannon(new Point2D(20, 200), GameEnvironment.positionLoc);
-		cannon.rotate(new Angle2D(360));
+		cannonStartPosition = new Point2D(20, 200);
+		cannonStartAngle = new Angle2D(0);
+
+		reset();
+	}
+
+	private void reset() {
+		GameEnvironment.state = "start";
+		cannon = new Cannon(cannonStartPosition.clone(), GameEnvironment.positionLoc);
+		cannon.rotate(cannonStartAngle);
 		startLine = null;
 		endLine = null;
+		GameEnvironment.levels[GameEnvironment.curLevelIndex].reset();
 	}
 
 	private void update() {
+
 		float deltaTime = Gdx.graphics.getDeltaTime();
 
 		if (GameEnvironment.state.equals("start") ||
@@ -48,6 +60,13 @@ public class SecondGame extends ApplicationAdapter {
 						curLevel.drawingLine = null;
 					}
 				}
+			}
+
+			// Resetting current level
+
+			if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+				reset();
+				return;
 			}
 
 			// Moving the cannon
@@ -89,26 +108,24 @@ public class SecondGame extends ApplicationAdapter {
 			// Firing the cannon
 
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-				ball = cannon.fire();
+				cannon.fire();
 			}
 
 			// Moving the cannon ball
 
-			if (ball != null) {
-				ball.move();
+			if (cannon.getBall() != null) {
+				cannon.moveBall();
 			}
 		} else if (GameEnvironment.state.equals("gameover")) {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 				GameEnvironment.state = "start";
-				cannon.reset();
-				ball = null;
+				reset();
 				GameEnvironment.levels[GameEnvironment.curLevelIndex].reset();
 			}
 		} else if (GameEnvironment.state.equals("win")) {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 				GameEnvironment.state = "start";
-				cannon.reset();
-				ball = null;
+				reset();
 				GameEnvironment.curLevelIndex++;
 				if (GameEnvironment.curLevelIndex >= GameEnvironment.numLevels) {
 					GameEnvironment.state = "end";
