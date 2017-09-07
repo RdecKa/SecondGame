@@ -41,18 +41,18 @@ public class SecondGame extends ApplicationAdapter {
 			// Disable drawing lines after firing the cannon
 			if (GameEnvironment.state.equals("start")) {
 				Level curLevel = GameEnvironment.levels[GameEnvironment.curLevelIndex];
-				if (Gdx.input.justTouched()) {
+				if (Gdx.input.justTouched() && curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
 					mouseX = Gdx.input.getX();
 					mouseY = GameEnvironment.winHeight - Gdx.input.getY();
 					if (startLine == null) {
 						startLine = new Point2D(mouseX, mouseY);
 					}
-				} else if (Gdx.input.isTouched()) {
+				} else if (Gdx.input.isTouched() && curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
 					mouseX = Gdx.input.getX();
 					mouseY = GameEnvironment.winHeight - Gdx.input.getY();
 					endLine = new Point2D(mouseX, mouseY);
 					curLevel.drawingLine = new Line2D(0, 0, 0, 0, startLine, endLine);
-				} else {
+				} else if (curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
 					if (curLevel.drawingLine != null) {
 						startLine = null;
 						endLine = null;

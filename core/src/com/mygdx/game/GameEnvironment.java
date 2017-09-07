@@ -138,6 +138,7 @@ class Level {
 
 	private int levelNum;
 	private Vector<Obstacle> obstacles;
+	private int allowedNumberOfLines;
 	public Line2D drawingLine;
 
 	public Level(int levelNum) {
@@ -151,12 +152,14 @@ class Level {
 			case 1: {
 				float boxSize = 100;
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(500, 300)));
+				this.allowedNumberOfLines = 1;
 				break;
 			}
 			case 2: {
 				float boxSize = 80;
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 400)));
+				this.allowedNumberOfLines = 2;
 				break;
 			}
 			case 3: {
@@ -164,6 +167,7 @@ class Level {
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 200)));
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 400)));
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 100)));
+				this.allowedNumberOfLines = 3;
 				break;
 			}
 			case 4: {
@@ -172,6 +176,7 @@ class Level {
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 200)));
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 300)));
+				this.allowedNumberOfLines = 3;
 				break;
 			}
 		}
@@ -187,11 +192,21 @@ class Level {
 		}
 	}
 
+	public int getNumberOfLines() {
+		int numLines = 0;
+		for (Obstacle obst: obstacles)
+			if (obst instanceof Line2D)
+				numLines++;
+		return numLines;
+	}
+
 	public Vector<Obstacle> getObstacles() {
 		return this.obstacles;
 	}
 
-	public void addObstacle(Obstacle obst) {
-		obstacles.add(obst);
+	public void addObstacle(Obstacle obst) { obstacles.add(obst); }
+
+	public int getAllowedNumberOfLines() {
+		return allowedNumberOfLines;
 	}
 }
