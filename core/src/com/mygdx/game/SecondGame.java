@@ -102,6 +102,17 @@ public class SecondGame extends ApplicationAdapter {
 				GameEnvironment.state = "start";
 				cannon.reset();
 				ball = null;
+				GameEnvironment.levels[GameEnvironment.curLevelIndex].reset();
+			}
+		} else if (GameEnvironment.state.equals("win")) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+				GameEnvironment.state = "start";
+				cannon.reset();
+				ball = null;
+				GameEnvironment.curLevelIndex++;
+				if (GameEnvironment.curLevelIndex >= GameEnvironment.numLevels) {
+					GameEnvironment.state = "end";
+				}
 			}
 		}
 	}

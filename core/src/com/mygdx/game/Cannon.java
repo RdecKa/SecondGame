@@ -226,13 +226,17 @@ class CannonBall {
 	private Obstacle nearestObstacleInThisFrame() {
 		// Returns the nearest obstacle
 		// Also sets reflection vector
+		// And checks whether the game is over (no boxes left)
 		Obstacle nearest = null;
+		int numBoxesLeft = 0;
 		float smallestThit = Integer.MAX_VALUE;
 		for (Obstacle obst: GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles()) {
 			float smallestThitThisObstacle = Integer.MAX_VALUE;
 			Point2D B1 = null;
 			Point2D B2 = null;
 			if (obst instanceof Box) {
+				numBoxesLeft++;
+
 				Point2D boxPosition = ((Box) obst).getPosition();
 				float boxPositionX = boxPosition.getPositionX();
 				float boxPositionY = boxPosition.getPositionY();
@@ -276,6 +280,9 @@ class CannonBall {
 				nearest = obst;
 				motion = getReflectedVector(B1, B2, motion);
 			}
+		}
+		if (numBoxesLeft == 0) {
+			GameEnvironment.state = "win";
 		}
 		return nearest;
 	}

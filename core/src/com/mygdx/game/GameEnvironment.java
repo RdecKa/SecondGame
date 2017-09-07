@@ -85,7 +85,7 @@ public class GameEnvironment {
         winHeight = Gdx.graphics.getHeight();
 
         state = "start";
-        numLevels = 2;
+        numLevels = 4;
         curLevelIndex = 0;
         levels = new Level[numLevels];
         for (int i = 0; i < numLevels; i++) {
@@ -138,26 +138,43 @@ class Level {
 
 	public Level(int levelNum) {
 		this.levelNum = levelNum;
+		reset();
+	}
+
+	public void reset() {
 		this.obstacles = new Vector<Obstacle>();
 		switch (levelNum) {
 			case 1: {
-				float boxSize = 50;
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 300)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 200)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 100)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 0)));
+				float boxSize = 100;
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(500, 300)));
 				break;
 			}
 			case 2: {
-				float boxSize = 50;
+				float boxSize = 80;
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
 				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 400)));
+				break;
+			}
+			case 3: {
+				float boxSize = 60;
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 200)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 400)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 100)));
+				break;
+			}
+			case 4: {
+				float boxSize = 50;
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 400)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 200)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 300)));
 				break;
 			}
 		}
 	}
 
 	public void draw() {
+
 		for (Obstacle obst: obstacles) {
 			obst.draw();
 		}
