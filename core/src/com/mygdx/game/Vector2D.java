@@ -37,6 +37,10 @@ public class Vector2D {
     	this.componentY *= factor;
 	}
 
+	public void addVector(Vector2D v) {
+		changeComponents(v.componentX, v.componentY);
+	}
+
 	@Override
 	public String toString() {
 		return "(" + this.componentX + ", " + this.componentY + ")";

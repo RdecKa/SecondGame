@@ -209,7 +209,7 @@ class CannonBall {
 	}
 
 	public void move() {
-		Obstacle nearest = nearestObstacle();
+		Obstacle nearest = nearestObstacleInThisFrame();
 		if (nearest != null) {
 			nearest.setRandomColor();
 		}
@@ -222,11 +222,15 @@ class CannonBall {
 		}
 	}
 
-	private Obstacle nearestObstacle() {
+	private Obstacle nearestObstacleInThisFrame() {
+		// Returns the nearest obstacle
+		// Also sets reflection vector
 		Obstacle nearest = null;
 		float smallestThit = Integer.MAX_VALUE;
 		for (Obstacle obst: GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles()) {
 			float smallestThitThisObstacle = Integer.MAX_VALUE;
+			Point2D B1 = null;
+			Point2D B2 = null;
 			if (obst instanceof Box) {
 				Point2D boxPosition = ((Box) obst).getPosition();
 				float boxPositionX = boxPosition.getPositionX();
@@ -242,10 +246,13 @@ class CannonBall {
 				for (int i = 0; i < vertices.length; i++) {
 					float ThitTmp = getThit(vertices[i], vertices[(i + 1) % vertices.length], position, motion);
 					if (ThitTmp >= 0 && ThitTmp <= 1) {
+						// Is the collision happening inside this frame?
 						Point2D pHit = getPhit(position, ThitTmp, motion);
 
 						if (pHit != null && pHit.isBetween(vertices[i], vertices[(i + 1) % vertices.length]) && ThitTmp < smallestThitThisObstacle) {
 							smallestThitThisObstacle = ThitTmp;
+							B1 = vertices[i];
+							B2 = vertices[(i + 1) % vertices.length];
 						}
 					}
 				}
@@ -253,6 +260,7 @@ class CannonBall {
 			if (smallestThitThisObstacle < smallestThit) {
 				smallestThit = smallestThitThisObstacle;
 				nearest = obst;
+				motion = getReflectedVector(B1, B2, motion);
 			}
 		}
 		return nearest;
@@ -274,5 +282,17 @@ class CannonBall {
 		translationVector.scale(tHit);
 		pHit.move(translationVector);
 		return pHit;
+	}
+
+	private static Vector2D getReflectedVector(Point2D B1, Point2D B2, Vector2D c) {
+		Vector2D v = B1.vectorFromHereToPoint(B2);
+		Vector2D n = v.getPerpendicularVector();
+		float an = Vector2D.dotProduct(c, n);
+		float nn = Vector2D.dotProduct(n, n);
+		Vector2D substractedVector = n.clone();
+		substractedVector.scale(- 2 * an / nn);
+		Vector2D reflectedVector = c.clone();
+		reflectedVector.addVector(substractedVector);
+		return reflectedVector;
 	}
 }
