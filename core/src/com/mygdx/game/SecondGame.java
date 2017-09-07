@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
-import javax.sound.sampled.Line;
-
 public class SecondGame extends ApplicationAdapter {
 	private Cannon cannon;
 	private CannonBall ball;
@@ -28,16 +26,27 @@ public class SecondGame extends ApplicationAdapter {
 
 		if (GameEnvironment.state.equals("start") ||
 				GameEnvironment.state.equals("ballfired")) {
-			if (Gdx.input.justTouched()) {
-				mouseX = Gdx.input.getX();
-				mouseY = GameEnvironment.winHeight - Gdx.input.getY();
-				if (startLine == null) {
-					startLine = new Point2D(mouseX, mouseY);
-				} else {
+			// Disable drawing lines after firing the cannon
+			if (GameEnvironment.state.equals("start")) {
+				Level curLevel = GameEnvironment.levels[GameEnvironment.curLevelIndex];
+				if (Gdx.input.justTouched()) {
+					mouseX = Gdx.input.getX();
+					mouseY = GameEnvironment.winHeight - Gdx.input.getY();
+					if (startLine == null) {
+						startLine = new Point2D(mouseX, mouseY);
+					}
+				} else if (Gdx.input.isTouched()) {
+					mouseX = Gdx.input.getX();
+					mouseY = GameEnvironment.winHeight - Gdx.input.getY();
 					endLine = new Point2D(mouseX, mouseY);
-					Line2D newLine = new Line2D(0, 0, 0, 0, startLine, endLine);
-					GameEnvironment.levels[GameEnvironment.curLevelIndex].addObstacle(newLine);
-					startLine = null;
+					curLevel.drawingLine = new Line2D(0, 0, 0, 0, startLine, endLine);
+				} else {
+					if (curLevel.drawingLine != null) {
+						startLine = null;
+						endLine = null;
+						curLevel.addObstacle(curLevel.drawingLine);
+						curLevel.drawingLine = null;
+					}
 				}
 			}
 

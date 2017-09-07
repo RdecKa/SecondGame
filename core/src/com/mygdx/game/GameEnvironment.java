@@ -134,6 +134,7 @@ class Level {
 
 	private int levelNum;
 	private Vector<Obstacle> obstacles;
+	public Line2D drawingLine;
 
 	public Level(int levelNum) {
 		this.levelNum = levelNum;
@@ -159,6 +160,9 @@ class Level {
 	public void draw() {
 		for (Obstacle obst: obstacles) {
 			obst.draw();
+		}
+		if (drawingLine != null) {
+			drawingLine.draw();
 		}
 	}
 
