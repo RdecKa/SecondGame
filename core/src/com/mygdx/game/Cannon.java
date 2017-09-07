@@ -211,6 +211,8 @@ class CannonBall {
 		Obstacle nearest = nearestObstacleInThisFrame();
 		if (nearest != null) {
 			nearest.setRandomColor();
+			if (nearest instanceof Box)
+				GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles().remove(nearest);
 		}
 		position.move(motion);
 		if (position.getPositionX() < - 2 * ballRadius ||
