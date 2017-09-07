@@ -5,18 +5,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
+import javax.sound.sampled.Line;
+
 public class SecondGame extends ApplicationAdapter {
 	private Cannon cannon;
 	private CannonBall ball;
+	private float mouseX, mouseY;
+	private Point2D startLine, endLine;
 
 	@Override
 	public void create() {
 		GameEnvironment.init();
-		RectangleGraphics.create(GameEnvironment.positionLoc);
-		CircleGraphics.create(GameEnvironment.positionLoc);
 
 		cannon = new Cannon(new Point2D(20, 200), GameEnvironment.positionLoc);
 		cannon.rotate(new Angle2D(360));
+		startLine = null;
+		endLine = null;
 	}
 
 	private void update() {
@@ -25,7 +29,16 @@ public class SecondGame extends ApplicationAdapter {
 		if (GameEnvironment.state.equals("start") ||
 				GameEnvironment.state.equals("ballfired")) {
 			if (Gdx.input.justTouched()) {
-
+				mouseX = Gdx.input.getX();
+				mouseY = GameEnvironment.winHeight - Gdx.input.getY();
+				if (startLine == null) {
+					startLine = new Point2D(mouseX, mouseY);
+				} else {
+					endLine = new Point2D(mouseX, mouseY);
+					Line2D newLine = new Line2D(0, 0, 0, 0, startLine, endLine);
+					GameEnvironment.levels[GameEnvironment.curLevelIndex].addObstacle(newLine);
+					startLine = null;
+				}
 			}
 
 			// Moving the cannon

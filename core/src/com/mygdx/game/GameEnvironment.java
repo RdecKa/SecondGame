@@ -91,6 +91,10 @@ public class GameEnvironment {
         for (int i = 0; i < numLevels; i++) {
         	levels[i] = new Level(i + 1);
 		}
+
+		RectangleGraphics.create(positionLoc);
+		CircleGraphics.create(positionLoc);
+		LineGraphics.create(positionLoc);
     }
 
     public static void clearModelMatrix() {
@@ -160,5 +164,9 @@ class Level {
 
 	public Vector<Obstacle> getObstacles() {
 		return this.obstacles;
+	}
+
+	public void addObstacle(Obstacle obst) {
+		obstacles.add(obst);
 	}
 }

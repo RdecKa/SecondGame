@@ -186,9 +186,7 @@ public class Cannon {
     	speed = new Vector2D(0, 0);
 	}
 
-	public Vector2D getAcceleration() {
-		return acceleration;
-	}
+	public Vector2D getAcceleration() { return acceleration; }
 }
 
 class CannonBall {
