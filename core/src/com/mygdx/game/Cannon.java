@@ -255,6 +255,19 @@ class CannonBall {
 						}
 					}
 				}
+			} else if (obst instanceof Line2D) {
+				Line2D line = (Line2D) obst;
+				Point2D P1 = line.getA1();
+				Point2D P2 = line.getA2();
+				float ThitTmp = getThit(P1, P2, position, motion);
+				if (ThitTmp >= 0 && ThitTmp <= 1) {
+					Point2D pHit = getPhit(position, ThitTmp, motion);
+					if (pHit != null && pHit.isBetween(P1, P2)) {
+						smallestThitThisObstacle = ThitTmp;
+						B1 = P1;
+						B2 = P2;
+					}
+				}
 			}
 			if (smallestThitThisObstacle < smallestThit) {
 				smallestThit = smallestThitThisObstacle;

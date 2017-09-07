@@ -13,4 +13,12 @@ public class Line2D extends Obstacle {
 		GameEnvironment.clearModelMatrix();
 		LineGraphics.drawLine(A1, A2);
 	}
+
+	public Point2D getA1() {
+		return A1;
+	}
+
+	public Point2D getA2() {
+		return A2;
+	}
 }
