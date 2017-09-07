@@ -157,8 +157,8 @@ class Level {
 			}
 			case 2: {
 				float boxSize = 80;
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 400)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(500, 200)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 400)));
 				this.allowedNumberOfLines = 2;
 				break;
 			}
@@ -198,6 +198,14 @@ class Level {
 			if (obst instanceof Line2D)
 				numLines++;
 		return numLines;
+	}
+
+	public Vector<Box> getBoxes() {
+		Vector<Box> boxes = new Vector<Box>();
+		for (Obstacle obst: obstacles)
+			if (obst instanceof Box)
+				boxes.add((Box) obst);
+		return boxes;
 	}
 
 	public Vector<Obstacle> getObstacles() {

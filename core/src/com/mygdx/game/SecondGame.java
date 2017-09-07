@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
+import java.util.Vector;
+
 public class SecondGame extends ApplicationAdapter {
 	private Cannon cannon;
 	private float mouseX, mouseY;
@@ -117,6 +119,10 @@ public class SecondGame extends ApplicationAdapter {
 				cannon.moveBall();
 			}
 		} else if (GameEnvironment.state.equals("gameover")) {
+			Vector<Box> boxes = GameEnvironment.levels[GameEnvironment.curLevelIndex].getBoxes();
+			for (Box box: boxes) {
+				box.shake();
+			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 				GameEnvironment.state = "start";
 				reset();
@@ -138,6 +144,13 @@ public class SecondGame extends ApplicationAdapter {
 		if (GameEnvironment.state.equals("start") ||
 				GameEnvironment.state.equals("ballfired")) {
 			Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			GameEnvironment.levels[GameEnvironment.curLevelIndex].draw();
+
+			cannon.draw();
+		} else if (GameEnvironment.state.equals("gameover")) {
+			Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 			GameEnvironment.levels[GameEnvironment.curLevelIndex].draw();

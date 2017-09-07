@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 
+import java.util.Random;
+
 public class Box extends Obstacle {
 	private float boxSize;
 	private Point2D position;
@@ -17,6 +19,12 @@ public class Box extends Obstacle {
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, red, green, blue, alpha);
 		GameEnvironment.setModelMatrixScale(boxSize, boxSize);
 		RectangleGraphics.drawSolidSquare();
+	}
+
+	public void shake() {
+		Random rand = new Random();
+		position.move(new Point2D(position.getPositionX() + rand.nextFloat() * 4 - 2,
+				position.getPositionY() + rand.nextFloat() * 4 - 2));
 	}
 
 	public Point2D getPosition() {
