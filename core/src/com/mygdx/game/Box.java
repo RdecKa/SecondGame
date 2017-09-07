@@ -2,17 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 
-public class Box {
+public class Box extends Obstacle {
 	private float boxSize;
-	private float red, green, blue, alpha;
 	private Point2D position;
 
 	public Box(float boxSize, float red, float green, float blue, float alpha, Point2D position) {
+		super(red, green, blue, alpha);
 		this.boxSize = boxSize;
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
-		this.alpha = alpha;
 		this.position = position;
 	}
 
@@ -21,5 +17,18 @@ public class Box {
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, red, green, blue, alpha);
 		GameEnvironment.setModelMatrixScale(boxSize, boxSize);
 		RectangleGraphics.drawSolidSquare();
+	}
+
+	public Point2D getPosition() {
+		return position;
+	}
+
+	public float getBoxSize() {
+		return boxSize;
+	}
+
+	@Override
+	public String toString() {
+		return position.toString();
 	}
 }

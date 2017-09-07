@@ -15,7 +15,7 @@ public class SecondGame extends ApplicationAdapter {
 		RectangleGraphics.create(GameEnvironment.positionLoc);
 		CircleGraphics.create(GameEnvironment.positionLoc);
 
-		cannon = new Cannon(new Point2D(200, 200), GameEnvironment.positionLoc);
+		cannon = new Cannon(new Point2D(20, 200), GameEnvironment.positionLoc);
 		cannon.rotate(new Angle2D(360));
 	}
 
@@ -71,6 +71,7 @@ public class SecondGame extends ApplicationAdapter {
 			}
 
 			// Moving the cannon ball
+
 			if (ball != null) {
 				ball.move();
 			}
@@ -96,10 +97,6 @@ public class SecondGame extends ApplicationAdapter {
 			Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 0.8f);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
-
-
-
-
 	}
 
 	@Override

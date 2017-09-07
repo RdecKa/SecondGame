@@ -209,6 +209,10 @@ class CannonBall {
 	}
 
 	public void move() {
+		Obstacle nearest = nearestObstacle();
+		if (nearest != null) {
+			nearest.setRandomColor();
+		}
 		position.move(motion);
 		if (position.getPositionX() < - 2 * ballRadius ||
 				position.getPositionX() > GameEnvironment.winWidth + 2 * ballRadius ||
@@ -216,5 +220,59 @@ class CannonBall {
 				position.getPositionY() > GameEnvironment.winHeight + 2 * ballRadius) {
 			GameEnvironment.state = "gameover";
 		}
+	}
+
+	private Obstacle nearestObstacle() {
+		Obstacle nearest = null;
+		float smallestThit = Integer.MAX_VALUE;
+		for (Obstacle obst: GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles()) {
+			float smallestThitThisObstacle = Integer.MAX_VALUE;
+			if (obst instanceof Box) {
+				Point2D boxPosition = ((Box) obst).getPosition();
+				float boxPositionX = boxPosition.getPositionX();
+				float boxPositionY = boxPosition.getPositionY();
+				float halfBoxSize = ((Box) obst).getBoxSize() / 2;
+
+				Point2D[] vertices = new Point2D[4];
+				vertices[0] = new Point2D(boxPositionX - halfBoxSize, boxPositionY - halfBoxSize);
+				vertices[1] = new Point2D(boxPositionX - halfBoxSize, boxPositionY + halfBoxSize);
+				vertices[2] = new Point2D(boxPositionX + halfBoxSize, boxPositionY + halfBoxSize);
+				vertices[3] = new Point2D(boxPositionX + halfBoxSize, boxPositionY - halfBoxSize);
+
+				for (int i = 0; i < vertices.length; i++) {
+					float ThitTmp = getThit(vertices[i], vertices[(i + 1) % vertices.length], position, motion);
+					if (ThitTmp >= 0 && ThitTmp <= 1) {
+						Point2D pHit = getPhit(position, ThitTmp, motion);
+
+						if (pHit != null && pHit.isBetween(vertices[i], vertices[(i + 1) % vertices.length]) && ThitTmp < smallestThitThisObstacle) {
+							smallestThitThisObstacle = ThitTmp;
+						}
+					}
+				}
+			}
+			if (smallestThitThisObstacle < smallestThit) {
+				smallestThit = smallestThitThisObstacle;
+				nearest = obst;
+			}
+		}
+		return nearest;
+	}
+
+	private static float getThit(Point2D B1, Point2D B2, Point2D A, Vector2D c) {
+		// Calculates time when point A travelling in direction c hits the line between points B1 and B2.
+		Vector2D v = B1.vectorFromHereToPoint(B2);
+		Vector2D n = v.getPerpendicularVector();
+		Vector2D ab = A.vectorFromHereToPoint(B1);
+		float tHit = Vector2D.dotProduct(n, ab) / Vector2D.dotProduct(n, c);
+		return tHit;
+	}
+
+	private static Point2D getPhit(Point2D A, float tHit, Vector2D c) {
+		// Calculates Phit = A + tHit * c
+		Point2D pHit = A.clone();
+		Vector2D translationVector = c.clone();
+		translationVector.scale(tHit);
+		pHit.move(translationVector);
+		return pHit;
 	}
 }

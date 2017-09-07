@@ -19,4 +19,26 @@ public class Vector2D {
     	this.componentX += componentX;
     	this.componentY += componentY;
     }
+
+    public Vector2D getPerpendicularVector() {
+    	return new Vector2D(componentY, -componentX);
+	}
+
+	public static float dotProduct(Vector2D v1, Vector2D v2) {
+    	return (v1.componentX * v2.componentX + v1.componentY * v2.componentY);
+	}
+
+	public Vector2D clone() {
+    	return new Vector2D(componentX, componentY);
+	}
+
+	public void scale(float factor) {
+    	this.componentX *= factor;
+    	this.componentY *= factor;
+	}
+
+	@Override
+	public String toString() {
+		return "(" + this.componentX + ", " + this.componentY + ")";
+	}
 }

@@ -29,17 +29,29 @@ public class Point2D {
     public void draw() {
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0, 0, 1);
 		GameEnvironment.setModelMatrixTranslation(positionX, positionY);
-		GameEnvironment.setModelMatrixScale(10, 10);
+		GameEnvironment.setModelMatrixScale(100, 100);
     	CircleGraphics.drawSolidCircle();
-    	System.out.println("Point");
 	}
 
 	public Vector2D pointToVector() {
 		return new Vector2D(this.getPositionX(), this.getPositionY());
 	}
 
+	public Vector2D vectorFromHereToPoint(Point2D p) {
+    	float distanceX = p.positionX - this.positionX;
+    	float distanceY = p.positionY - this.positionY;
+    	return new Vector2D(distanceX, distanceY);
+	}
+
 	public Point2D clone() {
     	return new Point2D(positionX, positionY);
+	}
+
+	public boolean isBetween(Point2D A, Point2D B) {
+    	return ((this.positionX >= A.positionX && this.positionX <= B.positionX ||
+				 this.positionX <= A.positionX && this.positionX >= B.positionX) &&
+				(this.positionY >= A.positionY && this.positionY <= B.positionY ||
+				 this.positionY <= A.positionY && this.positionY >= B.positionY));
 	}
 
     @Override

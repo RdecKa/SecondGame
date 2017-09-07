@@ -129,29 +129,36 @@ public class GameEnvironment {
 class Level {
 
 	private int levelNum;
-	private Vector<Box> boxes;
+	private Vector<Obstacle> obstacles;
 
 	public Level(int levelNum) {
 		this.levelNum = levelNum;
-		this.boxes = new Vector<Box>();
+		this.obstacles = new Vector<Obstacle>();
 		switch (levelNum) {
 			case 1: {
 				float boxSize = 50;
-				boxes.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 300)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 300)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 200)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 100)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 0)));
 				break;
 			}
 			case 2: {
 				float boxSize = 50;
-				boxes.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
-				boxes.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 400)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
+				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 400)));
 				break;
 			}
 		}
 	}
 
 	public void draw() {
-		for (Box box: boxes) {
-			box.draw();
+		for (Obstacle obst: obstacles) {
+			obst.draw();
 		}
+	}
+
+	public Vector<Obstacle> getObstacles() {
+		return this.obstacles;
 	}
 }
