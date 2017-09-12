@@ -54,6 +54,12 @@ public class Point2D {
 				 this.positionY <= A.positionY && this.positionY >= B.positionY));
 	}
 
+	public float getDistanceTo(Point2D point) {
+    	float diffX = this.positionX - point.positionX;
+    	float diffY = this.positionY - point.positionY;
+    	return (float) Math.sqrt(diffX * diffX + diffY * diffY);
+	}
+
     @Override
     public String toString() {
         return "(" + positionX + ", " + positionY + ")";

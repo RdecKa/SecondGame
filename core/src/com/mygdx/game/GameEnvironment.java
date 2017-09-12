@@ -214,7 +214,21 @@ class Level {
 
 	public void addObstacle(Obstacle obst) { obstacles.add(obst); }
 
+	public void removeObstacle(Obstacle obst) { obstacles.remove(obst); }
+
 	public int getAllowedNumberOfLines() {
 		return allowedNumberOfLines;
+	}
+
+	public Line2D wantToMoveLine(Point2D mousePoint) {
+		for (Obstacle obst: obstacles) {
+			if (obst instanceof Line2D) {
+				if (mousePoint.getDistanceTo(((Line2D) obst).getA1()) < ((Line2D) obst).getEndPointRadius() * 2 ||
+					mousePoint.getDistanceTo(((Line2D) obst).getA2()) < ((Line2D) obst).getEndPointRadius() * 2) {
+					return ((Line2D) obst);
+				}
+			}
+		}
+		return null;
 	}
 }

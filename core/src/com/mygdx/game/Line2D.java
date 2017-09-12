@@ -24,11 +24,12 @@ public class Line2D extends Obstacle {
 		A2.draw(endPointRadius);
 	}
 
-	public Point2D getA1() {
-		return A1;
-	}
-
+	public Point2D getA1() { return A1; }
 	public Point2D getA2() {
 		return A2;
+	}
+
+	public float getEndPointRadius() {
+		return endPointRadius;
 	}
 }

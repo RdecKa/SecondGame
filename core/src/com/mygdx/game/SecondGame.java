@@ -43,18 +43,34 @@ public class SecondGame extends ApplicationAdapter {
 			// Disable drawing lines after firing the cannon
 			if (GameEnvironment.state.equals("start")) {
 				Level curLevel = GameEnvironment.levels[GameEnvironment.curLevelIndex];
-				if (Gdx.input.justTouched() && curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
-					mouseX = Gdx.input.getX();
-					mouseY = GameEnvironment.winHeight - Gdx.input.getY();
+				Line2D lineToMove;
+				mouseX = Gdx.input.getX();
+				mouseY = GameEnvironment.winHeight - Gdx.input.getY();
+				Point2D mousePoint = new Point2D(mouseX, mouseY);
+				if (Gdx.input.justTouched() && (lineToMove = curLevel.wantToMoveLine(mousePoint)) != null) {
+					// User wants to move a line
+					Point2D A1 = lineToMove.getA1();
+					Point2D A2 = lineToMove.getA2();
+					curLevel.removeObstacle(lineToMove);
+					if (mousePoint.getDistanceTo(A1) < lineToMove.getEndPointRadius() * 2) {
+						// Moving point A1
+						startLine = A2;
+					} else {
+						// Moving point A2
+						startLine = A1;
+					}
+					curLevel.drawingLine = new Line2D(0, 0, 0, 0, startLine, mousePoint);
+				} else if (Gdx.input.justTouched() && curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
+					// Start of a new line
 					if (startLine == null) {
 						startLine = new Point2D(mouseX, mouseY);
 					}
 				} else if (Gdx.input.isTouched() && curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
-					mouseX = Gdx.input.getX();
-					mouseY = GameEnvironment.winHeight - Gdx.input.getY();
+					// Drawing a line
 					endLine = new Point2D(mouseX, mouseY);
 					curLevel.drawingLine = new Line2D(0, 0, 0, 0, startLine, endLine);
 				} else if (curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
+					// End of line
 					if (curLevel.drawingLine != null) {
 						startLine = null;
 						endLine = null;
