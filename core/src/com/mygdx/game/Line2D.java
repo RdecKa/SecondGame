@@ -15,6 +15,7 @@ public class Line2D extends Obstacle {
 
 	public void draw() {
 		// Draw line
+		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, red, green, blue, alpha);
 		GameEnvironment.clearModelMatrix();
 		LineGraphics.drawLine(A1, A2);
 
