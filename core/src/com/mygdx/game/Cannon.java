@@ -16,6 +16,7 @@ public class Cannon {
     private float length;
     private float width;
     private float circleRadius;
+	private float ballRadius;
     private CannonBall ball;
 
 	private static FloatBuffer vertexBuffer;
@@ -27,9 +28,10 @@ public class Cannon {
         this.acceleration = new Vector2D(20, 20);
         this.angle = new Angle2D(0);
         this.length = 50;
-        this.width = 20;
+        this.width = 18;
         this.circleRadius = 10;
         this.ball = null;
+        this.ballRadius = 8;
 
 		Cannon.vertexPointer = vertexPointer;
 
@@ -53,21 +55,12 @@ public class Cannon {
 
 		GameEnvironment.setModelMatrixTranslation(position.getPositionX(), position.getPositionY());
 
-		// Circle - outer, black
+		// Circle
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0, 0, 1);
 		GameEnvironment.setModelMatrixScale(2 * circleRadius, 2 * circleRadius);
 		CircleGraphics.drawSolidCircle();
-		// Circle - inner, white
-		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0.5f, 1, 1, 1);
-		GameEnvironment.setModelMatrixScale(1.5f * circleRadius, 1.5f * circleRadius);
-		CircleGraphics.drawSolidCircle();
 
-		// Body - white
-		/*GameEnvironment.setModelMatrixScale(1.9f,1.9f);
-		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 1, 0.5f, 1, 1);
-		Gdx.gl.glVertexAttribPointer(vertexPointer, 2, GL20.GL_FLOAT, false, 0, vertexBuffer);
-		Gdx.gl.glDrawArrays(GL20.GL_TRIANGLE_FAN, 0, 4);*/
-		// Body - black
+		// Body
 		GameEnvironment.setModelMatrixScale(1,1);
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0, 0, 1);
 		Gdx.gl.glVertexAttribPointer(vertexPointer, 2, GL20.GL_FLOAT, false, 0, vertexBuffer);
@@ -176,7 +169,7 @@ public class Cannon {
 
 	public CannonBall fire() {
 		if (this.ball == null) {
-			this.ball = new CannonBall(10, position.clone(), angle);
+			this.ball = new CannonBall(ballRadius, position.clone(), angle);
 			GameEnvironment.state = "ballfired";
 		}
 		return this.ball;
@@ -209,7 +202,7 @@ class CannonBall {
 
 	public void draw() {
 		GameEnvironment.setModelMatrixTranslation(position.getPositionX(), position.getPositionY());
-		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0.2f, 0.6f, 0.9f, 1);
+		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0.7f, 0.2f, 1);
 		GameEnvironment.setModelMatrixScale(ballRadius, ballRadius);
 		CircleGraphics.drawSolidCircle();
 	}
@@ -217,7 +210,6 @@ class CannonBall {
 	public void move() {
 		Obstacle nearest = nearestObstacleInThisFrame();
 		if (nearest != null) {
-			nearest.setRandomColor();
 			if (nearest instanceof Box)
 				GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles().remove(nearest);
 		}

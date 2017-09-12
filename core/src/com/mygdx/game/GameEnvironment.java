@@ -151,31 +151,31 @@ class Level {
 		switch (levelNum) {
 			case 1: {
 				float boxSize = 100;
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(500, 300)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 300)));
 				this.allowedNumberOfLines = 1;
 				break;
 			}
 			case 2: {
-				float boxSize = 80;
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(500, 200)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 400)));
+				float boxSize = 100;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 400)));
 				this.allowedNumberOfLines = 2;
 				break;
 			}
 			case 3: {
-				float boxSize = 60;
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 200)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 400)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(100, 100)));
+				float boxSize = 80;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(400, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 400)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 100)));
 				this.allowedNumberOfLines = 3;
 				break;
 			}
 			case 4: {
-				float boxSize = 50;
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(400, 400)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(300, 200)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(600, 200)));
-				obstacles.add(new Box(boxSize, 0.5f, 0.5f, 0.5f, 1, new Point2D(200, 300)));
+				float boxSize = 60;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(400, 400)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(600, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 300)));
 				this.allowedNumberOfLines = 3;
 				break;
 			}
