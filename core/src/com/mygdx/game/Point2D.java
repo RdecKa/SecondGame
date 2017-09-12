@@ -26,10 +26,10 @@ public class Point2D {
     	this.positionY = point.positionY;
 	}
 
-    public void draw() {
+    public void draw(float radius) {
 		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0, 0, 1);
 		GameEnvironment.setModelMatrixTranslation(positionX, positionY);
-		GameEnvironment.setModelMatrixScale(100, 100);
+		GameEnvironment.setModelMatrixScale(2 * radius, 2 * radius);
     	CircleGraphics.drawSolidCircle();
 	}
 

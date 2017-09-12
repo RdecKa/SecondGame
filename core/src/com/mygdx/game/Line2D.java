@@ -19,13 +19,8 @@ public class Line2D extends Obstacle {
 		LineGraphics.drawLine(A1, A2);
 
 		// Draw dots on the ends of line
-		Gdx.gl.glUniform4f(GameEnvironment.colorLoc, 0, 0, 0, 1);
-		GameEnvironment.setModelMatrixScale(2 * endPointRadius, 2 * endPointRadius);
-
-		GameEnvironment.setModelMatrixTranslation(A1.getPositionX(), A1.getPositionY());
-		CircleGraphics.drawSolidCircle();
-		GameEnvironment.setModelMatrixTranslation(A2.getPositionX(), A2.getPositionY());
-		CircleGraphics.drawSolidCircle();
+		A1.draw(endPointRadius);
+		A2.draw(endPointRadius);
 	}
 
 	public Point2D getA1() {
