@@ -168,7 +168,9 @@ public class Cannon {
 
 	public CannonBall fire() {
 		if (this.ball == null) {
-			this.ball = new CannonBall(ballRadius, position.clone(), angle);
+			float ballStartPositionX = (float) (position.getPositionX() + Math.cos(angle.getAngleRadians()) * length);
+			float ballStartPositionY = (float) (position.getPositionY() + Math.sin(angle.getAngleRadians()) * length);
+			this.ball = new CannonBall(ballRadius, new Point2D(ballStartPositionX, ballStartPositionY), angle);
 			GameEnvironment.state = "ballfired";
 		}
 		return this.ball;
