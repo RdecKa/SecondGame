@@ -158,6 +158,7 @@ class Level {
 	private int allowedNumberOfLines;
 	public Line2D drawingLine;
 	public static LinesIndicator linesIndicator;
+	public static LevelIndicator levelIndicator;
 
 	public Level(int levelNum) {
 		this.levelNum = levelNum;
@@ -199,6 +200,8 @@ class Level {
 			}
 		}
 		linesIndicator = new LinesIndicator(0, 0, 0, 1, this.allowedNumberOfLines);
+		levelIndicator = new LevelIndicator(0, 0.7f, 0, 1, levelNum);
+
 	}
 
 	public void draw() {
@@ -211,6 +214,7 @@ class Level {
 		}
 
 		linesIndicator.draw();
+		levelIndicator.draw();
 	}
 
 	public int getNumberOfLines() {
