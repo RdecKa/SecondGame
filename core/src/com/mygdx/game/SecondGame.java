@@ -26,7 +26,6 @@ public class SecondGame extends ApplicationAdapter {
 		cannonStartPosition = new Point2D(20, 200);
 		cannonStartAngle = new Angle2D(0);
 		rand = new Random();
-		spinOutVector = new Vector2D(rand.nextInt(10) - 5, rand.nextInt(10) - 5);
 
 		reset();
 	}
@@ -38,6 +37,7 @@ public class SecondGame extends ApplicationAdapter {
 		startLine = null;
 		endLine = null;
 		GameEnvironment.levels[GameEnvironment.curLevelIndex].reset();
+		spinOutVector = null;
 	}
 
 	private void continueToNextLevel() {
@@ -156,12 +156,17 @@ public class SecondGame extends ApplicationAdapter {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 				reset();
 				GameEnvironment.levels[GameEnvironment.curLevelIndex].reset();
-				spinOutVector = new Vector2D(rand.nextInt(10) - 5, rand.nextInt(10) - 5);
 			}
 		} else if (GameEnvironment.state.equals("win")) {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 				continueToNextLevel();
 			} else {
+				if (spinOutVector == null) {
+					float componentX = (rand.nextInt(300) - 150) * deltaTime;
+					float sign = rand.nextFloat() >= 0.5 ? -1 : 1;
+					float componentY = (float) Math.sqrt(10 - componentX * componentX) * sign;
+					spinOutVector = new Vector2D(componentX, componentY);
+				}
 				spinOutAngle = new Angle2D(150 * deltaTime);
 				cannon.spinOut(spinOutAngle, spinOutVector);
 				if (cannon.outOfWindow()) {
