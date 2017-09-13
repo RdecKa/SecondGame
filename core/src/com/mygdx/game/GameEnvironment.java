@@ -21,6 +21,7 @@ public class GameEnvironment {
     public static String state;
     public static int numLevels, curLevelIndex;
     public static Level[] levels;
+	public static float timer;
 
     public static void init() {
         String vertexShaderString;
@@ -99,6 +100,7 @@ public class GameEnvironment {
     public static void resetGame() {
 		state = "start";
 		curLevelIndex = 0;
+		timer = -1;
 	}
 
     public static void clearModelMatrix() {
@@ -132,6 +134,19 @@ public class GameEnvironment {
         modelMatrix.put(5, yScale);
         Gdx.gl.glUniformMatrix4fv(modelMatrixLoc, 1, false, modelMatrix);
     }
+
+	public static void setTimer(float sec) {
+		timer = sec;
+	}
+
+	public static float countDown(float timeElapsed) {
+		timer -= timeElapsed;
+		return timer;
+	}
+
+	public static boolean timerIsSet() {
+    	return (timer > 0);
+	}
 }
 
 class Level {

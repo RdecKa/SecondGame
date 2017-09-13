@@ -149,11 +149,16 @@ public class SecondGame extends ApplicationAdapter {
 				cannon.moveBall();
 			}
 		} else if (GameEnvironment.state.equals("gameover")) {
+			if (! GameEnvironment.timerIsSet()) {
+				GameEnvironment.setTimer(1);
+			} else {
+				GameEnvironment.countDown(deltaTime);
+			}
 			Vector<Box> boxes = GameEnvironment.levels[GameEnvironment.curLevelIndex].getBoxes();
 			for (Box box: boxes) {
 				box.shake();
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || ! GameEnvironment.timerIsSet()) {
 				reset();
 				GameEnvironment.levels[GameEnvironment.curLevelIndex].reset();
 			}
