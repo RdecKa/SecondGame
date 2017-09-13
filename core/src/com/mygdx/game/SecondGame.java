@@ -41,10 +41,11 @@ public class SecondGame extends ApplicationAdapter {
 	}
 
 	private void continueToNextLevel() {
-		reset();
 		GameEnvironment.curLevelIndex++;
 		if (GameEnvironment.curLevelIndex >= GameEnvironment.numLevels) {
 			GameEnvironment.state = "end";
+		} else {
+			reset();
 		}
 	}
 
@@ -78,6 +79,7 @@ public class SecondGame extends ApplicationAdapter {
 					// Start of a new line
 					if (startLine == null) {
 						startLine = new Point2D(mouseX, mouseY);
+						curLevel.removeIndicatorLine();
 					}
 				} else if (Gdx.input.isTouched() && curLevel.getNumberOfLines() < curLevel.getAllowedNumberOfLines()) {
 					// Drawing a line
@@ -179,7 +181,7 @@ public class SecondGame extends ApplicationAdapter {
 				}
 			}
 
-			if (cannon.getBall() != null) {
+			if (! GameEnvironment.state.equals("end") && cannon.getBall() != null) {
 				cannon.moveBall();
 			}
 		}

@@ -155,6 +155,7 @@ class Level {
 	private Vector<Obstacle> obstacles;
 	private int allowedNumberOfLines;
 	public Line2D drawingLine;
+	public static LinesIndicator linesIndicator;
 
 	public Level(int levelNum) {
 		this.levelNum = levelNum;
@@ -195,6 +196,7 @@ class Level {
 				break;
 			}
 		}
+		linesIndicator = new LinesIndicator(0, 0, 0, 1, this.allowedNumberOfLines);
 	}
 
 	public void draw() {
@@ -205,6 +207,8 @@ class Level {
 		if (drawingLine != null) {
 			drawingLine.draw();
 		}
+
+		linesIndicator.draw();
 	}
 
 	public int getNumberOfLines() {
@@ -242,5 +246,9 @@ class Level {
 						mousePoint.getDistanceTo(((Line2D) obst).getA2()) < ((Line2D) obst).getEndPointRadius() * 2)
 					return ((Line2D) obst);
 		return null;
+	}
+
+	public void removeIndicatorLine() {
+		linesIndicator.removeLine();
 	}
 }
