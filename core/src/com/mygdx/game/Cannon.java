@@ -220,10 +220,10 @@ class CannonBall {
 	}
 
 	public void move() {
-		Obstacle nearest = nearestObstacleInThisFrame();
-		if (nearest != null) {
+		Obstacle nearest;
+		while ((nearest = nearestObstacleInThisFrame()) != null) {
 			if (nearest instanceof Box)
-				GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles().remove(nearest);
+				GameEnvironment.levels[GameEnvironment.curLevelIndex].removeObstacle(nearest);
 		}
 		position.move(motion);
 		if (GameEnvironment.state.equals("ballfired") &&
