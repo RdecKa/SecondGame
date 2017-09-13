@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.BufferUtils;
@@ -187,6 +186,19 @@ public class Cannon {
 	public Vector2D getAcceleration() { return acceleration; }
 
 	public CannonBall getBall() { return ball; }
+
+	public void spinOut(Angle2D anglePerFrame, Vector2D motion) {
+		// Called when level is finished
+		position.move(motion);
+		rotate(anglePerFrame);
+	}
+
+	public boolean outOfWindow() {
+    	return (position.getPositionX() < - 2 * length ||
+				position.getPositionX() > GameEnvironment.winWidth + 2 * length||
+				position.getPositionY() < - 2 * length ||
+				position.getPositionY() > GameEnvironment.winHeight + 2 * length);
+	}
 }
 
 class CannonBall {
@@ -214,10 +226,11 @@ class CannonBall {
 				GameEnvironment.levels[GameEnvironment.curLevelIndex].getObstacles().remove(nearest);
 		}
 		position.move(motion);
-		if (position.getPositionX() < - 2 * ballRadius ||
+		if (GameEnvironment.state.equals("ballfired") &&
+				(position.getPositionX() < - 2 * ballRadius ||
 				position.getPositionX() > GameEnvironment.winWidth + 2 * ballRadius ||
 				position.getPositionY() < - 2 * ballRadius ||
-				position.getPositionY() > GameEnvironment.winHeight + 2 * ballRadius) {
+				position.getPositionY() > GameEnvironment.winHeight + 2 * ballRadius)) {
 			GameEnvironment.state = "gameover";
 		}
 	}

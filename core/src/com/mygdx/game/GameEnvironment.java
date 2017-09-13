@@ -221,14 +221,11 @@ class Level {
 	}
 
 	public Line2D wantToMoveLine(Point2D mousePoint) {
-		for (Obstacle obst: obstacles) {
-			if (obst instanceof Line2D) {
+		for (Obstacle obst: obstacles)
+			if (obst instanceof Line2D)
 				if (mousePoint.getDistanceTo(((Line2D) obst).getA1()) < ((Line2D) obst).getEndPointRadius() * 2 ||
-					mousePoint.getDistanceTo(((Line2D) obst).getA2()) < ((Line2D) obst).getEndPointRadius() * 2) {
+						mousePoint.getDistanceTo(((Line2D) obst).getA2()) < ((Line2D) obst).getEndPointRadius() * 2)
 					return ((Line2D) obst);
-				}
-			}
-		}
 		return null;
 	}
 }
