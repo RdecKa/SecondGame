@@ -22,6 +22,7 @@ public class GameEnvironment {
     public static int numLevels, curLevelIndex;
     public static Level[] levels;
 	public static float timer;
+	public static int numColorsWin;
 
     public static void init() {
         String vertexShaderString;
@@ -101,6 +102,7 @@ public class GameEnvironment {
 		state = "start";
 		curLevelIndex = 0;
 		timer = -1;
+		numColorsWin = 5;
 	}
 
     public static void clearModelMatrix() {

@@ -184,6 +184,18 @@ public class SecondGame extends ApplicationAdapter {
 			if (! GameEnvironment.state.equals("end") && cannon.getBall() != null) {
 				cannon.moveBall();
 			}
+		} else if (GameEnvironment.state.equals("end")) {
+			if (! GameEnvironment.timerIsSet()) {
+				GameEnvironment.setTimer(0.3f);
+				Gdx.gl.glClearColor(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1.0f);
+				GameEnvironment.numColorsWin--;
+				if (GameEnvironment.numColorsWin < 0) {
+					GameEnvironment.resetGame();
+					reset();
+				}
+			} else {
+				GameEnvironment.countDown(deltaTime);
+			}
 		}
 	}
 
@@ -210,8 +222,7 @@ public class SecondGame extends ApplicationAdapter {
 			GameEnvironment.levels[GameEnvironment.curLevelIndex].draw();
 
 			cannon.draw();
-		} else {
-			Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 0.8f);
+		} else if (GameEnvironment.state.equals("end")) {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
 	}
