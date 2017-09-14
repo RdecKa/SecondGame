@@ -86,7 +86,7 @@ public class GameEnvironment {
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
 
-        numLevels = 4;
+        numLevels = 10;
 
         levels = new Level[numLevels];
         for (int i = 0; i < numLevels; i++) {
@@ -176,12 +176,27 @@ class Level {
 			}
 			case 2: {
 				float boxSize = 100;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 300)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 300)));
+				this.allowedNumberOfLines = 1;
+				break;
+			}
+			case 3: {
+				float boxSize = 100;
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 200)));
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 400)));
 				this.allowedNumberOfLines = 2;
 				break;
 			}
-			case 3: {
+			case 4: {
+				float boxSize = 80;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 300)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 300)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 300)));
+				this.allowedNumberOfLines = 2;
+				break;
+			}
+			case 5: {
 				float boxSize = 80;
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(400, 200)));
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 400)));
@@ -189,13 +204,46 @@ class Level {
 				this.allowedNumberOfLines = 3;
 				break;
 			}
-			case 4: {
+			case 6: {
+				float boxSize = 80;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 400)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 300)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 100)));
+				this.allowedNumberOfLines = 2;
+				break;
+			}
+			case 7: {
 				float boxSize = 60;
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(400, 400)));
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 200)));
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(600, 200)));
 				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 300)));
 				this.allowedNumberOfLines = 3;
+				break;
+			}
+			case 8: {
+				float boxSize = 60;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 100)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(300, 300)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(400, 400)));
+				this.allowedNumberOfLines = 2;
+				break;
+			}
+			case 9: {
+				float boxSize = 50;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(100, 400)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 100)));
+				this.allowedNumberOfLines = 1;
+				break;
+			}
+			case 10: {
+				float boxSize = 50;
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(200, 200)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(500, 100)));
+				obstacles.add(new Box(boxSize, 0.7f, 0, 0, 1, new Point2D(400, 300)));
+				this.allowedNumberOfLines = 0;
 				break;
 			}
 		}
